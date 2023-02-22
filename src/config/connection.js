@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const mongooseConnection = () => {
+  mongoose.set("strictQuery", false);
   mongoose
     .connect(process.env.DBURI, {
       useNewUrlParser: true,
