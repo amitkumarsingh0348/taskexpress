@@ -2,13 +2,15 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const mongooseConnection = () => {
-  mongoose.set("strictQuery", false);
+  mongoose.set("strictQuery", true);
   mongoose
-    .connect(process.env.DBURI, {
+    .connect(process.env.DBURI, 
+      {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       
-    })
+    }
+    )
     .then(() => {
       console.log("Successfully connected to the database");
     })

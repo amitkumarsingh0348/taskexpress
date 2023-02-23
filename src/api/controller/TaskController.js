@@ -70,7 +70,7 @@ const editTask = async (req, res) => {
 
       try {
            let perPage = 5
-           page = req.query?.page || 1
+           page = req.query?.page - 1
            let taskList =  await taskManagement.find().limit(perPage).skip(perPage * page).sort({createdAt: 'asc'})
            return res.json({status:constant.status.success, message:constant.message.getdatasucess, data:taskList})
       } catch (error) {

@@ -3,6 +3,7 @@ const User = require("../model/User");
 const constant = require("../services/constant");
 const { userSignupModel, userSignupServices } = require("../services/authServices");
 const { sendMailToUserSignup } = require("../services/mailService");
+const { validateSignUpRequest } = require("../services/taskServices");
 
 
 const userRegister = async (req, res) => {
@@ -10,11 +11,11 @@ const userRegister = async (req, res) => {
   console.log(" userRegister controller ",req.body);
   const { ...rest } = req.body;
   try {
+    let error = validateSignUpRequest(req.body)
 
-    if(Object.keys(req.body).length === 0){    
-      return res.status(204).json({status:constant.status.error, message:" Empty request ", data:{}})
+    if(Object.keys(error).length > 0){
+      return res.status(400).json({status:constant.status.error, message:'Invalid or extra parameter is passed', data:error})
     }
-
       // -----------------------------   NORMAL SIGNUP BY EMAIL AND PASSWORD ---------------------------- 
         let validateUser = await User.findOne({ email: rest.email });
         if (validateUser) {

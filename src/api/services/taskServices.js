@@ -46,13 +46,30 @@ const createTaskServices = async(payload,userId) => {
     }
   }
   
-  module.exports = {
-    userSignupServices
-  };
+  const validateSignUpRequest = (data) => {
+    let error = {}
+
+    let rexemail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+     if(rexemail.test(data.email) == false){
+      error.email = 'email invalid'
+     }
+     if(data.firstName == ''){
+      error.firstName = 'firstName is  invalid'
+     }
+     if(data.lastName == ''){
+      error.lastName = 'lastName is  invalid'
+     }
+     if(data.password == ''){
+      error.password = 'password is  invalid'
+     }
+
+   return error
+  }
 
 module.exports={
   userSignupModel,
   createTaskServices,
     userSignupServices,
-    otpServices
+    otpServices,
+    validateSignUpRequest
 }
